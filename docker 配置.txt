@@ -1,0 +1,22 @@
+docker run --name mysql \
+-e MYSQL_ROOT_PASSWORD=wang13587 \
+-p 3306:3306 -d mysql
+
+
+docker run --name redis \
+-p 6379:6379 \
+-d redis redis-server \
+--appendonly yes
+
+
+docker run --name nacos \
+ -e MODE=standalone \
+ -e SPRING_DATASOURCE_PLATFORM=mysql \
+ -e MYSQL_SERVICE_HOST=mysql \
+ -e MYSQL_SERVICE_PORT=3306 \
+ -e MYSQL_SERVICE_DB_NAME=nacos \
+ -e MYSQL_SERVICE_USER=root \
+ -e MYSQL_SERVICE_PASSWORD=wang13587 \
+ -e MYSQL_DATABASE_NUM=1 \
+ --link mysql \
+ -p 8848:8848 -d nacos/nacos-server:2.0.2
